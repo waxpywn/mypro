@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title data-i18n-text="code1"></title>
+    <link rel="stylesheet" href="js/layui-v2.2.5/css/layui.css?time=20180129" media="all"/>
+    <link rel="stylesheet" href="js/layui-v2.2.5/css/global.css?time=20180129" media="all"/>
+    <link rel="stylesheet" href="css/login.css?time=20180129">
+
+    <script src="./js/jquery/3.2.1/jquery.min.js?time=20180129"></script>
+    <script src="js/layui-v2.2.5/layui.js?time=20180129"></script>
+</head>
+<body class="login_bj">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header header header-demo" spring="">
+        <div class="layui-main">
+            <div class="layui-logo" style="color: #fff;">
+                <h5 data-i18n-text="code1"></h5>
+            </div>
+            <ul class="layui-nav" lay-filter="language">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="langDesc" data-i18n-text="code2"></a>
+                    <span class="layui-nav-more"></span>
+                    <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                        <dd data-value="zh_CN"><a>中文简体</a></dd>
+                        <dd data-value="en_US"><a>English</a></dd>
+                        <dd data-value="idn"><a>Indonesia</a></dd>
+                        <dd data-value="vi"><a>Vietnam</a></dd>
+                    </dl>
+                </li>
+                <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;">-->
+                <!--<span id="langDesc"></span>-->
+                <!--</a>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body site-demo" style="left: 0px;">
+        <div class="login_kuang" style="background-color: #fff">
+            <fieldset class="layui-elem-field layui-field-title" style="margin: 25px;">
+                <legend data-i18n-text="code3"></legend>
+                <div class="layui-field-box" style="padding-bottom: 0px;margin-top: 20px;">
+                    <form class="layui-form layui-form-pane" method="post">
+                        <div class="layui-form-item">
+                            <label for="username" data-i18n-text="code16" class="layui-form-label"></label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="username" lay-verify="required"
+                                       autocomplete="off" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="password" data-i18n-text="code17" class="layui-form-label"></label>
+                            <div class="layui-input-inline">
+                                <input type="password" id="password" lay-verify="required"
+                                       autocomplete="off" class="layui-input"
+                                       onkeydown="javascript:if(event.keyCode==13)login()"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="float: right;">
+                            <a href="javascript:changePwd()" data-i18n-text="code4" style="color: #37b5f9;"></a>
+                        </div>
+                        <div class="layui-form-item" style="text-align: center">
+                            <a href="javascript:login()" class="layui-btn layui-btn-fluid layui-btn-normal"
+                               data-i18n-text="code5"
+                               style=" border-radius: 5px; background-color: #37b5f9; width:80%"></a>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="layui-footer footer footer-demo" style="left: 0;">
+        <div class="layui-main">
+            <!-- 底部固定区域 -->
+            © 掌众金融信息服务有限公司
+        </div>
+    </div>
+</div>
+
+
+<div id="changeUser" style="display:none;text-align: center">
+    <form class="layui-form layui-form-pane" method="post" style="margin: 15px 25px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" data-i18n-text="code16" for="changename"></label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="changename"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" data-i18n-text="code17" for="oldpwd"></label>
+            <div class="layui-input-block">
+                <input type="password" class="layui-input" id="oldpwd"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" data-i18n-text="code134" for="newpwd"></label>
+            <div class="layui-input-block">
+                <input type="password" class="layui-input" id="newpwd"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" data-i18n-text="code135" for="confirmpwd"></label>
+            <div class="layui-input-block">
+                <input type="password" class="layui-input" id="confirmpwd"/>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="./js/login.js?time=20180129"></script>
+<script>
+    layui.use(['form', 'element'], function () {
+        var form = layui.form,
+            element = layui.element;
+        //监听导航点击
+        element.on('nav(language)', function (elem) {
+//            layer.msg(elem.data('value'));
+
+            var language = elem.data('value');
+            getCookie("userLanguage", language, {
+                expires: 30,
+                path: '/'
+            });
+
+            getCookie("LanguageDesc", elem.text(), {
+                expires: 30,
+                path: '/'
+            });
+            location.reload();
+        });
+        var lang = getCookie('LanguageDesc');
+        $("#langDesc").text(lang ? lang : $.i18n.prop("code2"));
+        form.render();
+    })
+</script>
+<script>
+    window.global = {
+        pageType: 'demo',
+        preview: function () {
+            var preview = document.getElementById('LAY_preview');
+            return preview ? preview.innerHTML : '';
+        }()
+    };
+    layui.config({
+        base: './js/layui-v2.2.5/'
+        , version: '1520760931738'
+    }).use('global');
+</script>
+</body>
+</html>
